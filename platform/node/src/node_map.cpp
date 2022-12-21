@@ -542,18 +542,21 @@ void NodeMap::renderFinished() {
 
         request->runInAsyncScope(target, callback, 1, argv);
     } else if (img.data) {
-        v8::Local<v8::Object> pixels = Nan::NewBuffer(
-            reinterpret_cast<char *>(img.data.get()), img.bytes(),
-            // Retain the data until the buffer is deleted.
-            [](char *, void * hint) {
-                delete [] reinterpret_cast<uint8_t*>(hint);
-            },
-            img.data.get()
-        ).ToLocalChecked();
+        auto image_size = img.bytes();
+        v8::Local<v8::Object> pixels =
+            Nan::NewBuffer(
+                reinterpret_cast<char*>(img.data.get()), image_size,
+                [](char* buf, void* hint) {
+                    delete[] buf;
+                    std::int64_t* mem_freed = reinterpret_cast<std::int64_t*>(hint);
+                    Nan::AdjustExternalMemory(-(*mem_freed + sizeof(std::int64_t)));
+                    delete mem_freed;
+                }, new std::int64_t(image_size))
+            .ToLocalChecked();
         if (!pixels.IsEmpty()) {
             img.data.release();
         }
-
+        Nan::AdjustExternalMemory(image_size + sizeof(std::int64_t));
         v8::Local<v8::Value> argv[] = {
             Nan::Null(),
             pixels
