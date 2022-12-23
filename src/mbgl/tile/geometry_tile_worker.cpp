@@ -42,7 +42,9 @@ GeometryTileWorker::GeometryTileWorker(ActorRef<GeometryTileWorker> self_,
       obsolete(obsolete_),
       mode(mode_),
       pixelRatio(pixelRatio_),
-      showCollisionBoxes(showCollisionBoxes_) {}
+      showCollisionBoxes(showCollisionBoxes_) {
+        mbgl::Log::Info(mbgl::Event::General, "GeometryTileWorker constructing");
+      }
 
 GeometryTileWorker::~GeometryTileWorker() = default;
 

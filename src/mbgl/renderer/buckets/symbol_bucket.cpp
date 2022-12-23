@@ -7,6 +7,8 @@
 #include <mbgl/text/glyph_atlas.hpp>
 #include <mbgl/text/placement.hpp>
 
+#include <mbgl/util/logging.hpp>
+
 #include <utility>
 
 namespace mbgl {
@@ -62,7 +64,9 @@ SymbolBucket::SymbolBucket(Immutable<style::SymbolLayoutProperties::PossiblyEval
     }
 }
 
-SymbolBucket::~SymbolBucket() = default;
+SymbolBucket::~SymbolBucket() {
+    mbgl::Log::Info(mbgl::Event::General, "SymbolBucket destructing");
+}
 
 void SymbolBucket::upload(gfx::UploadPass& uploadPass) {
     if (hasTextData()) {
