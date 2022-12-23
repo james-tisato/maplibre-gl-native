@@ -65,7 +65,7 @@ SymbolBucket::SymbolBucket(Immutable<style::SymbolLayoutProperties::PossiblyEval
 }
 
 SymbolBucket::~SymbolBucket() {
-    mbgl::Log::Info(mbgl::Event::General, "SymbolBucket destructing");
+    mbgl::Log::Warning(mbgl::Event::General, "SymbolBucket destructing");
 }
 
 void SymbolBucket::upload(gfx::UploadPass& uploadPass) {
