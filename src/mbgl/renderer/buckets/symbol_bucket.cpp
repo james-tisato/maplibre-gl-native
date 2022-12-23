@@ -9,6 +9,7 @@
 
 #include <mbgl/util/logging.hpp>
 
+#include <iostream>
 #include <utility>
 
 namespace mbgl {
@@ -66,6 +67,7 @@ SymbolBucket::SymbolBucket(Immutable<style::SymbolLayoutProperties::PossiblyEval
 
 SymbolBucket::~SymbolBucket() {
     mbgl::Log::Warning(mbgl::Event::General, "SymbolBucket destructing");
+    std::cout << "SymbolBucket destructing";
 }
 
 void SymbolBucket::upload(gfx::UploadPass& uploadPass) {

@@ -23,7 +23,7 @@
 #include <unordered_set>
 #include <utility>
 
-dasijdapiowjdpiaqwjdiopawjd
+#include <iostream>
 
 namespace mbgl {
 
@@ -46,6 +46,7 @@ GeometryTileWorker::GeometryTileWorker(ActorRef<GeometryTileWorker> self_,
       pixelRatio(pixelRatio_),
       showCollisionBoxes(showCollisionBoxes_) {
         mbgl::Log::Warning(mbgl::Event::General, "GeometryTileWorker constructing");
+        std::cout << "GeometryTileWorker constructing";
       }
 
 GeometryTileWorker::~GeometryTileWorker() = default;
@@ -347,6 +348,7 @@ void GeometryTileWorker::parse() {
     std::unordered_map<std::string, std::unique_ptr<SymbolLayout>> symbolLayoutMap;
 
     mbgl::Log::Warning(mbgl::Event::General, "Clearing renderData and layouts in GeometryTileWorker::parse()");
+    std::cout << "Clearing renderData and layouts in GeometryTileWorker::parse()";
 
     renderData.clear();
     layouts.clear();
